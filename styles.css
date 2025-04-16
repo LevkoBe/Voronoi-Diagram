@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f0f0f0;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.left-panel {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.right-panel {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+}
+canvas {
+  border: 1px solid black;
+  image-rendering: pixelated;
+  max-width: 100%;
+  height: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+  background: white;
+}
+table,
+th,
+td {
+  border: 1px solid #444;
+  padding: 4px;
+}
+th {
+  background-color: #f2f2f2;
+}
+#controls {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.hover-display {
+  margin-top: 5px;
+}
+.button {
+  padding: 5px 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.button:hover {
+  background: #45a049;
+}
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.slider-value {
+  width: 30px;
+  text-align: right;
+}
+input[type="range"] {
+  flex: 1;
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+}

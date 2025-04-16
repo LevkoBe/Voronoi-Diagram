@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Voronoi Diagram</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Voronoi Diagram (Euclidean, Manhattan, Chebyshev)</h1>
+
+    <div class="container">
+      <div class="left-panel">
+        <div id="controls">
+          <label for="metric">Distance metric:</label>
+          <select id="metric">
+            <option value="euclidean">Euclidean</option>
+            <option value="manhattan">Manhattan</option>
+            <option value="chebyshev">Chebyshev</option>
+          </select>
+
+          <div class="slider-container">
+            <label for="gap">Gap:</label>
+            <input
+              type="range"
+              id="gap"
+              min="0"
+              max="5"
+              value="0.5"
+              step="0.1"
+            />
+            <span id="gapValue" class="slider-value">0.5</span>
+          </div>
+
+          <button id="download" class="button">Download PNG</button>
+          <button id="clearPoints" class="button">Clear All Points</button>
+        </div>
+
+        <canvas id="voronoiCanvas" width="1000" height="1000"></canvas>
+        <div class="hover-display" id="hoverPos">Hover: (x, y)</div>
+      </div>
+
+      <div class="right-panel">
+        <h3 class="panel-title">Points</h3>
+        <table id="pointTable"></table>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
