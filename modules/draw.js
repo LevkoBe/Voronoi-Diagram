@@ -33,21 +33,38 @@ export function draw() {
   const metric = document.getElementById("metric").value;
   // @ts-ignore
   const gap = parseFloat(document.getElementById("gap").value);
+  let optimisation = parseFloat(
+    // @ts-ignore
+    document.getElementById("optimisation").value
+  );
+
+  let lastColor =
+    allColors.length > 0 ? allColors[allColors.length - 1] : "rgb(200,200,200)";
+  const [lr, lg, lb] = lastColor.match(/\d+/g).map(Number);
 
   for (let y = 0; y < state.height; y++) {
     for (let x = 0; x < state.width; x++) {
-      let minDist = Infinity;
-      let secondMin = Infinity;
-      let minIndex = -1;
+      const pixelIndex = (y * state.width + x) * 4;
+
+      if ((x + y) % optimisation !== 0) {
+        data[pixelIndex] = lr;
+        data[pixelIndex + 1] = lg;
+        data[pixelIndex + 2] = lb;
+        data[pixelIndex + 3] = 255;
+        continue;
+      }
 
       if (allpoints.length === 0) {
-        const pixelIndex = (y * state.width + x) * 4;
         data[pixelIndex] = 240;
         data[pixelIndex + 1] = 240;
         data[pixelIndex + 2] = 240;
         data[pixelIndex + 3] = 255;
         continue;
       }
+
+      let minDist = Infinity;
+      let secondMin = Infinity;
+      let minIndex = -1;
 
       for (let i = 0; i < allpoints.length; i++) {
         const d = distance({ x, y }, allpoints[i], metric);
@@ -61,7 +78,6 @@ export function draw() {
       }
 
       const diff = Math.abs(minDist - secondMin);
-      const pixelIndex = (y * state.width + x) * 4;
 
       if (diff < gap) {
         data[pixelIndex] = 0;
@@ -72,7 +88,7 @@ export function draw() {
         let r = 0,
           g = 0,
           b = 0;
-        const color = allColors[minIndex];
+        const color = (lastColor = allColors[minIndex]);
 
         const matches = color.match(/\d+/g);
         if (matches && matches.length >= 3) {
@@ -89,7 +105,7 @@ export function draw() {
 
   state.ctx.putImageData(imageData, 0, 0);
 
-  // state.points dots
+  // points dots
   state.ctx.save();
   state.points.forEach((point, i) => {
     state.ctx.fillStyle = "white";
