@@ -14,9 +14,14 @@
         <div id="controls">
           <label for="metric">Distance metric:</label>
           <select id="metric">
-            <option value="euclidean">Euclidean</option>
-            <option value="manhattan">Manhattan</option>
-            <option value="chebyshev">Chebyshev</option>
+            <option value="euclidean">euclidean</option>
+            <option value="manhattan">manhattan</option>
+            <option value="chebyshev">chebyshev</option>
+            <option value="canberra">canberra</option>
+            <option value="unknown1">unknown1</option>
+            <option value="unknown2">unknown2</option>
+            <option value="unknown3">unknown3</option>
+            <option value="unknown4">unknown4</option>
           </select>
 
           <div class="slider-container">
@@ -39,10 +44,10 @@
               id="optimisation"
               min="1"
               max="20"
-              value="1"
+              value="2"
               step="1"
             />
-            <span id="optimisationValue" class="slider-value">1</span>
+            <span id="optimisationValue" class="slider-value">2</span>
           </div>
 
           <button id="download" class="button">Download PNG</button>
