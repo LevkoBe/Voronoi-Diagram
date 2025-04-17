@@ -50,7 +50,7 @@ export function handleMouseEvents() {
   });
 }
 
-function updatePointTable() {
+export function updatePointTable() {
   const table = document.getElementById("pointTable");
   table.innerHTML = "<tr><th>X</th><th>Y</th><th>Delete</th></tr>";
   state.points.forEach((p, i) => {
