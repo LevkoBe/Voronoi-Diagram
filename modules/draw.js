@@ -38,18 +38,18 @@ export function draw() {
     document.getElementById("optimisation").value
   );
 
-  let lastColor =
-    allColors.length > 0 ? allColors[allColors.length - 1] : "rgb(200,200,200)";
-  const [lr, lg, lb] = lastColor.match(/\d+/g).map(Number);
+  let r = 0,
+    g = 0,
+    b = 0;
 
   for (let y = 0; y < state.height; y++) {
     for (let x = 0; x < state.width; x++) {
       const pixelIndex = (y * state.width + x) * 4;
 
       if ((x + y) % optimisation !== 0) {
-        data[pixelIndex] = lr;
-        data[pixelIndex + 1] = lg;
-        data[pixelIndex + 2] = lb;
+        data[pixelIndex] = r;
+        data[pixelIndex + 1] = g;
+        data[pixelIndex + 2] = b;
         data[pixelIndex + 3] = 255;
         continue;
       }
@@ -85,11 +85,7 @@ export function draw() {
         data[pixelIndex + 2] = 0;
         data[pixelIndex + 3] = 255;
       } else {
-        let r = 0,
-          g = 0,
-          b = 0;
-        const color = (lastColor = allColors[minIndex]);
-
+        const color = allColors[minIndex];
         const matches = color.match(/\d+/g);
         if (matches && matches.length >= 3) {
           [r, g, b] = matches.map(Number);
