@@ -37,6 +37,7 @@ export function draw() {
     // @ts-ignore
     document.getElementById("optimisation").value
   );
+  const originalOptimization = optimisation;
 
   let r = 0,
     g = 0,
@@ -46,7 +47,7 @@ export function draw() {
     for (let x = 0; x < state.width; x++) {
       const pixelIndex = (y * state.width + x) * 4;
 
-      if ((x + y) % optimisation !== 0) {
+      if (x % optimisation !== 0) {
         data[pixelIndex] = r;
         data[pixelIndex + 1] = g;
         data[pixelIndex + 2] = b;
@@ -88,7 +89,24 @@ export function draw() {
         const color = allColors[minIndex];
         const matches = color.match(/\d+/g);
         if (matches && matches.length >= 3) {
-          [r, g, b] = matches.map(Number);
+          const [newR, newG, newB] = matches.map(Number);
+
+          const colorChanged = newR !== r || newG !== g || newB !== b;
+
+          if (colorChanged) {
+            optimisation = Math.max(
+              Math.floor(optimisation / 4),
+              originalOptimization / 4
+            );
+            r = newR;
+            g = newG;
+            b = newB;
+          } else {
+            optimisation = Math.min(
+              optimisation * 4,
+              (originalOptimization - 0.75) * 4
+            );
+          }
         }
 
         data[pixelIndex] = r;
