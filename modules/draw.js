@@ -33,32 +33,35 @@ export function draw() {
   const metric = document.getElementById("metric").value;
   // @ts-ignore
   const gap = parseFloat(document.getElementById("gap").value);
-  let optimisation = parseFloat(
+  const optimisation = parseFloat(
     // @ts-ignore
     document.getElementById("optimisation").value
   );
-  const originalOptimization = optimisation;
 
   let r = 0,
     g = 0,
     b = 0;
+  let skipCount = 0;
+  let notSkipCount = 0;
 
   for (let y = 0; y < state.height; y++) {
     for (let x = 0; x < state.width; x++) {
       const pixelIndex = (y * state.width + x) * 4;
 
-      if (x % optimisation !== 0) {
-        data[pixelIndex] = r;
-        data[pixelIndex + 1] = g;
-        data[pixelIndex + 2] = b;
-        data[pixelIndex + 3] = 255;
+      if (allpoints.length === 0) {
+        data[pixelIndex] =
+          data[pixelIndex + 1] =
+          data[pixelIndex + 2] =
+          data[pixelIndex + 3] =
+            200;
         continue;
       }
 
-      if (allpoints.length === 0) {
-        data[pixelIndex] = 240;
-        data[pixelIndex + 1] = 240;
-        data[pixelIndex + 2] = 240;
+      if (skipCount > 0) {
+        skipCount--;
+        data[pixelIndex] = r;
+        data[pixelIndex + 1] = g;
+        data[pixelIndex + 2] = b;
         data[pixelIndex + 3] = 255;
         continue;
       }
@@ -81,39 +84,36 @@ export function draw() {
       const diff = Math.abs(minDist - secondMin);
 
       if (diff < gap) {
-        data[pixelIndex] = 0;
-        data[pixelIndex + 1] = 0;
-        data[pixelIndex + 2] = 0;
-        data[pixelIndex + 3] = 255;
+        r = g = b = 0;
+        skipCount = 0;
       } else {
         const color = allColors[minIndex];
         const matches = color.match(/\d+/g);
+
         if (matches && matches.length >= 3) {
           const [newR, newG, newB] = matches.map(Number);
 
           const colorChanged = newR !== r || newG !== g || newB !== b;
 
           if (colorChanged) {
-            optimisation = Math.max(
-              Math.floor(optimisation / 4),
-              originalOptimization / 4
-            );
+            notSkipCount = skipCount;
+            x -= skipCount;
+            skipCount = 0;
             r = newR;
             g = newG;
             b = newB;
+          } else if (notSkipCount-- > 0) {
+            skipCount = 0;
           } else {
-            optimisation = Math.min(
-              optimisation * 4,
-              (originalOptimization - 0.75) * 4
-            );
+            skipCount = optimisation;
           }
         }
-
-        data[pixelIndex] = r;
-        data[pixelIndex + 1] = g;
-        data[pixelIndex + 2] = b;
-        data[pixelIndex + 3] = 255;
       }
+
+      data[pixelIndex] = r;
+      data[pixelIndex + 1] = g;
+      data[pixelIndex + 2] = b;
+      data[pixelIndex + 3] = 255;
     }
   }
 
