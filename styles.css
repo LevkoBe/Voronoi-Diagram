@@ -95,6 +95,10 @@ input[type="color"] {
   transition: background 0.2s, border-color 0.2s;
 }
 
+select {
+  width: auto;
+}
+
 select:hover,
 input[type="range"]:hover,
 input[type="text"]:hover,
