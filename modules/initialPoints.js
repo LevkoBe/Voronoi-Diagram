@@ -3,8 +3,8 @@ import { genRandColor } from "./utils.js";
 
 export function addInitialPoints(count = 7, range = 500) {
   const newPoints = Array.from({ length: count }, () => ({
-    x: Math.random() * range,
-    y: Math.random() * range,
+    x: Math.round(Math.random() * range),
+    y: Math.round(Math.random() * range),
   }));
 
   state.points.push(...newPoints);

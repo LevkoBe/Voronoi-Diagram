@@ -12,33 +12,39 @@
     <div class="container">
       <div class="left-panel">
         <div id="controls">
-          <label for="metric">Distance metric:</label>
-          <select id="metric">
-            <option value="euclidean">euclidean</option>
-            <option value="manhattan">manhattan</option>
-            <option value="chebyshev">chebyshev</option>
-            <option value="canberra">canberra</option>
-            <option value="unknown1">unknown1</option>
-            <option value="unknown2">unknown2</option>
-            <option value="unknown3">unknown3</option>
-            <option value="unknown4">unknown4</option>
-          </select>
-
-          <div class="slider-container">
-            <label for="optimisation">Optimisation:</label>
-            <input
-              type="range"
-              id="optimisation"
-              min="1"
-              max="100"
-              value="1"
-              step="1"
-            />
-            <span id="optimisationValue" class="slider-value">1</span>
+          <div class="control-row">
+            <label for="metric">Metric:</label>
+            <select id="metric">
+              <option value="euclidean">euclidean</option>
+              <option value="manhattan">manhattan</option>
+              <option value="chebyshev">chebyshev</option>
+              <option value="canberra">canberra</option>
+              <option value="unknown1">unknown1</option>
+              <option value="unknown2">unknown2</option>
+              <option value="unknown3">unknown3</option>
+              <option value="unknown4">unknown4</option>
+            </select>
           </div>
 
-          <button id="download" class="button">Download PNG</button>
-          <button id="clearPoints" class="button">Clear All Points</button>
+          <div class="control-row">
+            <label for="optimisation">Optimisation:</label>
+            <div class="slider-wrapper">
+              <input
+                type="range"
+                id="optimisation"
+                min="1"
+                max="100"
+                value="1"
+                step="1"
+              />
+              <span id="optimisationValue" class="slider-value">1</span>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button id="download" class="button">Download PNG</button>
+            <button id="clearPoints" class="button">Clear Points</button>
+          </div>
         </div>
 
         <canvas id="voronoiCanvas" width="500" height="500"></canvas>
