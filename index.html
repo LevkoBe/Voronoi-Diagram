@@ -25,36 +25,23 @@
           </select>
 
           <div class="slider-container">
-            <label for="gap">Gap:</label>
-            <input
-              type="range"
-              id="gap"
-              min="0"
-              max="5"
-              value="0.5"
-              step="0.1"
-            />
-            <span id="gapValue" class="slider-value">0.5</span>
-          </div>
-
-          <div class="slider-container">
             <label for="optimisation">Optimisation:</label>
             <input
               type="range"
               id="optimisation"
               min="1"
-              max="50"
-              value="10"
+              max="100"
+              value="1"
               step="1"
             />
-            <span id="optimisationValue" class="slider-value">10</span>
+            <span id="optimisationValue" class="slider-value">1</span>
           </div>
 
           <button id="download" class="button">Download PNG</button>
           <button id="clearPoints" class="button">Clear All Points</button>
         </div>
 
-        <canvas id="voronoiCanvas" width="1000" height="1000"></canvas>
+        <canvas id="voronoiCanvas" width="500" height="500"></canvas>
         <div class="hover-display" id="hoverPos">Hover: (x, y)</div>
       </div>
 

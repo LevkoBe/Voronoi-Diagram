@@ -11,12 +11,6 @@ export function initUI() {
 
   document.getElementById("metric").addEventListener("change", draw);
 
-  document.getElementById("gap").addEventListener("input", function () {
-    // @ts-ignore
-    document.getElementById("gapValue").textContent = this.value;
-    draw();
-  });
-
   document
     .getElementById("optimisation")
     .addEventListener("input", function () {

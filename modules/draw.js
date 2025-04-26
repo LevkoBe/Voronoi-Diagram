@@ -32,88 +32,47 @@ export function draw() {
   // @ts-ignore
   const metric = document.getElementById("metric").value;
   // @ts-ignore
-  const gap = parseFloat(document.getElementById("gap").value);
   const optimisation = parseFloat(
     // @ts-ignore
     document.getElementById("optimisation").value
   );
 
-  let r = 0,
-    g = 0,
-    b = 0;
-  let skipCount = 0;
-  let notSkipCount = 0;
+  const skip = Math.max(1, Math.floor(optimisation));
+  const numPoints = allpoints.length;
+  const width = state.width;
+  const height = state.height;
 
-  for (let y = 0; y < state.height; y++) {
-    for (let x = 0; x < state.width; x++) {
-      const pixelIndex = (y * state.width + x) * 4;
+  const colorCache = {};
+  allColors.forEach((c, i) => {
+    const [r, g, b] = c.match(/\d+/g).map(Number);
+    colorCache[i] = [r, g, b];
+  });
 
-      if (allpoints.length === 0) {
-        data[pixelIndex] =
-          data[pixelIndex + 1] =
-          data[pixelIndex + 2] =
-          data[pixelIndex + 3] =
-            200;
-        continue;
-      }
-
-      if (skipCount > 0) {
-        skipCount--;
-        data[pixelIndex] = r;
-        data[pixelIndex + 1] = g;
-        data[pixelIndex + 2] = b;
-        data[pixelIndex + 3] = 255;
-        continue;
-      }
-
+  for (let y = 0; y < height; y += skip) {
+    for (let x = 0; x < width; x += skip) {
       let minDist = Infinity;
-      let secondMin = Infinity;
-      let minIndex = -1;
+      let closestIndex = 0;
 
-      for (let i = 0; i < allpoints.length; i++) {
-        const d = distance({ x, y }, allpoints[i], metric);
+      for (let i = 0; i < numPoints; i++) {
+        const p = allpoints[i];
+        const d = distance({ x, y }, p, metric);
         if (d < minDist) {
-          secondMin = minDist;
           minDist = d;
-          minIndex = i;
-        } else if (d < secondMin) {
-          secondMin = d;
+          closestIndex = i;
         }
       }
 
-      const diff = Math.abs(minDist - secondMin);
+      const [r, g, b] = colorCache[closestIndex];
 
-      if (diff < gap) {
-        r = g = b = 0;
-        skipCount = 0;
-      } else {
-        const color = allColors[minIndex];
-        const matches = color.match(/\d+/g);
-
-        if (matches && matches.length >= 3) {
-          const [newR, newG, newB] = matches.map(Number);
-
-          const colorChanged = newR !== r || newG !== g || newB !== b;
-
-          if (colorChanged) {
-            notSkipCount = skipCount;
-            x -= skipCount;
-            skipCount = 0;
-            r = newR;
-            g = newG;
-            b = newB;
-          } else if (notSkipCount-- > 0) {
-            skipCount = 0;
-          } else {
-            skipCount = optimisation;
-          }
+      for (let dy = 0; dy < skip && y + dy < height; dy++) {
+        for (let dx = 0; dx < skip && x + dx < width; dx++) {
+          const idx = 4 * ((y + dy) * width + (x + dx));
+          data[idx] = r;
+          data[idx + 1] = g;
+          data[idx + 2] = b;
+          data[idx + 3] = 255;
         }
       }
-
-      data[pixelIndex] = r;
-      data[pixelIndex + 1] = g;
-      data[pixelIndex + 2] = b;
-      data[pixelIndex + 3] = 255;
     }
   }
 
