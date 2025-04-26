@@ -42,35 +42,44 @@ export function draw() {
   const width = state.width;
   const height = state.height;
 
-  const colorCache = {};
-  allColors.forEach((c, i) => {
-    const [r, g, b] = c.match(/\d+/g).map(Number);
-    colorCache[i] = [r, g, b];
-  });
+  if (numPoints === 0) {
+    for (let i = 0; i < data.length; i += 4) {
+      data[i] = 255;
+      data[i + 1] = 255;
+      data[i + 2] = 255;
+      data[i + 3] = 255;
+    }
+  } else {
+    const colorCache = {};
+    allColors.forEach((c, i) => {
+      const [r, g, b] = c.match(/\d+/g).map(Number);
+      colorCache[i] = [r, g, b];
+    });
 
-  for (let y = 0; y < height; y += skip) {
-    for (let x = 0; x < width; x += skip) {
-      let minDist = Infinity;
-      let closestIndex = 0;
+    for (let y = 0; y < height; y += skip) {
+      for (let x = 0; x < width; x += skip) {
+        let minDist = Infinity;
+        let closestIndex = 0;
 
-      for (let i = 0; i < numPoints; i++) {
-        const p = allpoints[i];
-        const d = distance({ x, y }, p, metric);
-        if (d < minDist) {
-          minDist = d;
-          closestIndex = i;
+        for (let i = 0; i < numPoints; i++) {
+          const p = allpoints[i];
+          const d = distance({ x, y }, p, metric);
+          if (d < minDist) {
+            minDist = d;
+            closestIndex = i;
+          }
         }
-      }
 
-      const [r, g, b] = colorCache[closestIndex];
+        const [r, g, b] = colorCache[closestIndex];
 
-      for (let dy = 0; dy < skip && y + dy < height; dy++) {
-        for (let dx = 0; dx < skip && x + dx < width; dx++) {
-          const idx = 4 * ((y + dy) * width + (x + dx));
-          data[idx] = r;
-          data[idx + 1] = g;
-          data[idx + 2] = b;
-          data[idx + 3] = 255;
+        for (let dy = 0; dy < skip && y + dy < height; dy++) {
+          for (let dx = 0; dx < skip && x + dx < width; dx++) {
+            const idx = 4 * ((y + dy) * width + (x + dx));
+            data[idx] = r;
+            data[idx + 1] = g;
+            data[idx + 2] = b;
+            data[idx + 3] = 255;
+          }
         }
       }
     }
