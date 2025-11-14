@@ -4,7 +4,7 @@
 
 An interactive, browser-based **Voronoi diagram generator** built with the Canvas API and custom geometry logic. This tool allows you to experiment with spatial partitioning in real-time, offering a fast and intuitive way to explore Voronoi tessellations using different distance metrics.
 
-## ✨ Features
+## Features
 
 * **Dynamic Point Editing**:
 
@@ -24,19 +24,19 @@ An interactive, browser-based **Voronoi diagram generator** built with the Canva
 
   * Save the diagram as an image for use in presentations or further analysis.
 
-## 🧠 Use Cases
+## Use Cases
 
 * Visualizing spatial partitioning
 * Understanding distance functions in computational geometry
 * Educational demonstrations
 * Generative art and design tools
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **HTML5 Canvas API**
 * **Vanilla JavaScript**
 
-## 📦 Getting Started
+## Getting Started
 
 Clone the repo and open `index.html` in a browser:
 
